@@ -4,10 +4,14 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import data from "./data.json";
-import Editor from "../packages/editor";
+import Editor from "./packages/editor";
+import { registerConfig as config } from "./utils/editor-config.jsx";
+
 const state = ref(data);
+provide("config", config);
+
 </script>
 
 <style scoped lang="scss">
