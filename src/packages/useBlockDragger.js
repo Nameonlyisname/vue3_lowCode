@@ -1,10 +1,12 @@
 import { reactive } from "vue";
+import { events } from "./events";
 
 // 展示区域元素选中后拖拽功能
 export function useBlockDragger(focusData, lastSelectBlock, data) {
   let dragState = {
     startX: 0,
     startY: 0,
+    dragging: false,
   };
   let markLine = reactive({
     x: null,
@@ -13,6 +15,11 @@ export function useBlockDragger(focusData, lastSelectBlock, data) {
 
   const mousemove = (e) => {
     let { clientX: moveX, clientY: moveY } = e;
+
+    if (!dragState.dragging) {
+      dragState.dragging = true;
+      events.emit("start");
+    }
 
     // 计算当前拖拽元素的位置与显示辅助线的情况
     let left = moveX * 1 - dragState.startX * 1 + dragState.startLeft * 1;
@@ -53,6 +60,9 @@ export function useBlockDragger(focusData, lastSelectBlock, data) {
     document.removeEventListener("mouseup", mouseup);
     markLine.x = null;
     markLine.y = null;
+    if (dragState.dragging) {
+      events.emit("end");
+    }
   };
   const mousedown = (e) => {
     const { width: BWidth, height: BHeight } = lastSelectBlock.value;
@@ -63,6 +73,7 @@ export function useBlockDragger(focusData, lastSelectBlock, data) {
       startPos: focusData.value.focus.map(({ top, left }) => ({ top, left })),
       startLeft: lastSelectBlock.value.left, //B被拖拽前的位置
       startTop: lastSelectBlock.value.top, //B被拖拽前的位置
+      dragging: false,
       lines: (() => {
         const { unfocused } = focusData.value;
 

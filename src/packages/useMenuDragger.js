@@ -1,3 +1,5 @@
+import { events } from "./events";
+
 // 左侧菜单内展示组件的拖拽功能
 export function useMenuDragger(containerRef, data) {
   let currentComponent = null;
@@ -9,11 +11,9 @@ export function useMenuDragger(containerRef, data) {
   };
   const dragleave = (e) => {
     e.dataTransfer.dropEffect = "none";
-    currentComponent = null;
   };
   const drop = (e) => {
     let blocks = data.value.blocks;
-    console.log(currentComponent);
     data.value = {
       ...data.value,
       blocks: [
@@ -39,12 +39,14 @@ export function useMenuDragger(containerRef, data) {
     containerRef.value.addEventListener("dragleave", dragleave);
     containerRef.value.addEventListener("drop", drop);
     currentComponent = component;
+    events.emit("start");
   };
   const dragend = () => {
     containerRef.value.removeEventListener("dragenter", dragenter);
     containerRef.value.removeEventListener("dragover", dragover);
     containerRef.value.removeEventListener("dragleave", dragleave);
     containerRef.value.removeEventListener("drop", drop);
+    events.emit("end");
   };
 
   return {

@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, nextTick, ref } from "vue";
+import { computed, defineComponent, inject, ref } from "vue";
 import "./editor.scss";
 import EditorBlock from "./editor-block";
 import deepcopy from "deepcopy";
@@ -6,6 +6,7 @@ import deepcopy from "deepcopy";
 import { useMenuDragger } from "./useMenuDragger"; // 左侧菜单内展示组件的拖拽功能
 import { useFocus } from "./useFocus"; // 展示区元素选中功能
 import { useBlockDragger } from "./useBlockDragger"; // 左侧菜单内展示组件的拖拽功能
+import { useCommand } from "./useCommand";
 
 export default defineComponent({
   name: "Editor",
@@ -40,6 +41,20 @@ export default defineComponent({
     });
     let { mousedown, markLine } = useBlockDragger(focusData, lastSelectBlock, data);
 
+    const { commands } = useCommand(data);
+    const button = [
+      {
+        label: "撤销",
+        icon: "iconfont icon-chexiao",
+        handler: () => commands.undo(),
+      },
+      {
+        label: "重做",
+        icon: "iconfont icon-zhongzuo",
+        handler: () => commands.redo(),
+      },
+    ];
+
     return () => (
       <div class="editor">
         <div class="editor-left">
@@ -55,7 +70,16 @@ export default defineComponent({
             </div>
           ))}
         </div>
-        <div class="editor-top">菜单</div>
+        <div class="editor-top">
+          {button.map((btn, index) => {
+            return (
+              <div class="editor-top-button" onClick={btn.handler}>
+                <i class={btn.icon}></i>
+                <span>{btn.label}</span>
+              </div>
+            );
+          })}
+        </div>
         <div class="editor-right">属性栏</div>
         <div class="editor-container">
           {/* 负责产生滚动条 */}
@@ -76,9 +100,7 @@ export default defineComponent({
                   {block.focus}
                 </EditorBlock>
               ))}
-              {markLine.x !== null && (
-                <div class="line-x" style={{ left: `${markLine.x}px` }}></div>
-              )}
+              {markLine.x !== null && <div class="line-x" style={{ left: `${markLine.x}px` }}></div>}
               {markLine.y !== null && <div class="line-y" style={{ top: `${markLine.y}px` }}></div>}
             </div>
           </div>

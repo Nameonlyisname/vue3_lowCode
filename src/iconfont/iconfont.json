@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "577331",
+      "name": "撤销",
+      "font_class": "chexiao",
+      "unicode": "e734",
+      "unicode_decimal": 59188
+    },
+    {
+      "icon_id": "24007756",
+      "name": "重做",
+      "font_class": "zhongzuo",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    }
+  ]
+}
