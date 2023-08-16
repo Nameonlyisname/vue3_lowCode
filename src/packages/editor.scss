@@ -1,69 +1,76 @@
 .editor {
-  padding: 20px;
-  width: calc(100vw - 40px);
-  height: calc(100vh - 40px);
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+
   &-left,
   &-right {
-    width: 20%;
-    height: 100%;
+    position: absolute;
+    width: 270px;
     background-color: red;
+    height: 100%;
   }
 
   &-left {
+    left: 0;
+
     &-item {
+      width: 250px;
+      margin: 20px auto;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #fff;
+      background-color: white;
       padding: 20px;
+      box-sizing: border-box;
       cursor: move;
       user-select: none;
-      margin: 20px auto;
-      min-height: 150px;
-      box-sizing: border-box;
+      min-height: 100px;
       position: relative;
       > span {
         position: absolute;
         top: 0;
         left: 0;
-        margin-bottom: 20px;
-        font-weight: 700;
         background-color: skyblue;
-        color: white;
-        padding: 5px 10px;
+        padding: 4px;
       }
-      > div {
-        align-self: center;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        opacity: 0.2;
       }
     }
   }
+  &-right {
+    right: 0;
+  }
 
-  .editor-middle {
-    width: calc(100% - 40%);
-    background-color: skyblue;
-    &-top {
-      margin: 0 20px;
-      height: 80px;
-      background-color: burlywood;
-    }
+  &-top {
+    position: absolute;
+    right: 280px;
+    left: 280px;
+    height: 80px;
+    background-color: burlywood;
+  }
 
-    &-container {
-      height: calc(100% - 80px);
-      margin: 0 auto;
-      &-canvas {
-        overflow: auto;
+  &-container {
+    padding: 80px 270px 0;
+    height: 100%;
+    box-sizing: border-box;
+
+    &-canvas {
+      overflow: scroll;
+      height: 100%;
+
+      &_content {
         height: 100%;
-        &_content {
-          position: relative;
-
-          width: 500px;
-          height: 1000px;
-          background-color: brown;
-          margin: 20px auto 0;
-        }
+        margin: 20px auto;
+        background-color: yellow;
+        position: relative;
       }
     }
   }
@@ -71,4 +78,30 @@
 
 .editor-block {
   position: absolute;
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+.editor-block-focus {
+  &::after {
+    border: 2px dashed red;
+  }
+}
+.line-x {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 2px dashed red;
+}
+
+.line-y {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed red;
 }
