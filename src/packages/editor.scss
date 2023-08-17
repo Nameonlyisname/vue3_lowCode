@@ -103,6 +103,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    user-select: none;
   }
 }
 .editor-block-focus {
@@ -110,6 +111,12 @@
     border: 2px dashed red;
   }
 }
+.editor-block-preview{
+  &::after {
+    display: none;
+  }
+}
+
 .line-x {
   position: absolute;
   top: 0;

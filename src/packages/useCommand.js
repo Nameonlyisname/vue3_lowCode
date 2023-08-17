@@ -2,7 +2,7 @@ import deepcopy from "deepcopy";
 import { events } from "./events";
 import { onUnmounted } from "vue";
 
-export function useCommand(data) {
+export function useCommand(data, focusData) {
   const state = {
     current: -1, //索引
     queue: [], //所有操作
@@ -13,8 +13,8 @@ export function useCommand(data) {
 
   const registry = (command) => {
     state.commandArray.push(command);
-    state.commands[command.name] = () => {
-      const { redo, undo } = command.execute();
+    state.commands[command.name] = (...args) => {
+      const { redo, undo } = command.execute(...args);
       redo();
       if (!command.pushQueue) return;
       let { queue, current } = state;
@@ -44,6 +44,7 @@ export function useCommand(data) {
       };
     },
   });
+
   registry({
     name: "undo",
     keyboard: "ctrl+z",
@@ -92,7 +93,134 @@ export function useCommand(data) {
     },
   });
 
+  registry({
+    name: "updateContainer",
+    pushQueue: true,
+    execute(newValue) {
+      let state = {
+        before: data.value,
+        after: newValue,
+      };
+      return {
+        redo: () => {
+          data.value = state.after;
+        },
+        undo: () => {
+          data.value = state.before;
+        },
+      };
+    },
+  });
+
+  registry({
+    name: "placeTop",
+    pushQueue: true,
+    execute() {
+      let before = deepcopy(data.value.blocks);
+      let after = (() => {
+        let { focus, unfocused } = focusData.value;
+        let maxZIndex = unfocused.reduce((prev, block) => Math.max(prev, block.zIndex), -Infinity);
+        focus.forEach((block) => (block.zIndex = maxZIndex + 1));
+        return data.value.blocks;
+      })();
+
+      return {
+        redo: () => {
+          data.value = { ...data.value, blocks: after };
+        },
+
+        undo: () => {
+          // blocks旧数据与当前数据一致，不会更新
+          data.value = { ...data.value, blocks: before };
+        },
+      };
+    },
+  });
+
+  registry({
+    name: "placeBottom",
+    pushQueue: true,
+    execute() {
+      let before = deepcopy(data.value.blocks);
+      let after = (() => {
+        let { focus, unfocused } = focusData.value;
+        let minZIndex =
+          unfocused.reduce((prev, block) => Math.min(prev, block.zIndex), Infinity) - 1;
+
+        // zIndex为负值(不断的点击置底)可能会导致看不到组件
+        // focus.forEach((block) => (block.zIndex = minZIndex - 1));
+        if (minZIndex < 0) {
+          const dur = Math.abs(minZIndex);
+          minZIndex = 0;
+          unfocused.forEach((block) => (block.zIndex += dur));
+        }
+        focus.forEach((block) => (block.zIndex = minZIndex));
+
+        return data.value.blocks;
+      })();
+
+      return {
+        redo: () => {
+          data.value = { ...data.value, blocks: after };
+        },
+
+        undo: () => {
+          // blocks旧数据与当前数据一致，不会更新
+          data.value = { ...data.value, blocks: before };
+        },
+      };
+    },
+  });
+
+  registry({
+    name: "delete",
+    pushQueue: true,
+    execute() {
+      let state = {
+        before: deepcopy(data.value.blocks),
+        after: focusData.value.unfocused,
+      };
+      return {
+        redo: () => {
+          data.value = { ...data.value, blocks: state.after };
+        },
+
+        undo: () => {
+          data.value = { ...data.value, blocks: state.before };
+        },
+      };
+    },
+  });
+
+  const keyboardEvent = (() => {
+    const keyCodes = { 90: "z", 89: "y" };
+
+    const onKeydown = (e) => {
+      const { ctrlKey, keyCode } = e;
+      let keyString = [];
+      if (ctrlKey) keyString.push("ctrl");
+      keyString.push(keyCodes[keyCode]);
+      keyString = keyString.join("+");
+      state.commandArray.forEach(({ keyboard, name }) => {
+        if (!keyboard) return;
+        if (keyboard === keyString) {
+          state.commands[name]();
+          e.preventDefault();
+        }
+      });
+    };
+
+    const init = () => {
+      window.addEventListener("keydown", onKeydown);
+      return () => {
+        window.removeEventListener("keydown", onKeydown);
+      };
+    };
+    return init;
+  })();
+
   (() => {
+    state.destroyArray.push(keyboardEvent());
     state.commandArray.forEach(
       (command) => command.init && state.destroyArray.push(command.init())
     );

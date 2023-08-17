@@ -1,7 +1,7 @@
 // 展示区元素选中功能
 import { computed, ref } from "vue";
 
-export function useFocus(data, callback) {
+export function useFocus(data, previewRef, callback) {
   const selectIndex = ref(-1);
 
   const focusData = computed(() => {
@@ -12,6 +12,8 @@ export function useFocus(data, callback) {
   });
 
   const blockMousedown = (e, block, index) => {
+    if (previewRef.value) return;
+
     e.preventDefault();
     e.stopPropagation(); //阻止捕获和冒泡阶段中当前事件的进一步传播
 
@@ -38,9 +40,11 @@ export function useFocus(data, callback) {
     data.value.blocks.forEach((block) => (block.focus = false));
   };
   const containerMousedown = () => {
+    if (previewRef.value) return;
+
     clearBlockFocus();
     selectIndex.value = -1;
   };
 
-  return { focusData, blockMousedown, containerMousedown, lastSelectBlock };
+  return { focusData, blockMousedown, containerMousedown, lastSelectBlock, clearBlockFocus };
 }

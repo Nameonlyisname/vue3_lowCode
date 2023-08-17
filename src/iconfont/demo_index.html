@@ -47,10 +47,24 @@
         <li class="dib"><span>Symbol</span></li>
       </ul>
       
+      <a href="https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=4215288" target="_blank" class="nav-more">查看项目</a>
+      
     </div>
     <div class="tab-container">
       <div class="content unicode" style="display: block;">
           <ul class="icon_lists dib-box">
+          
+            <li class="dib">
+              <span class="icon iconfont">&#xe6b0;</span>
+                <div class="name">编辑</div>
+                <div class="code-name">&amp;#xe6b0;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon iconfont">&#xec86;</span>
+                <div class="name">字体预览</div>
+                <div class="code-name">&amp;#xec86;</div>
+              </li>
           
             <li class="dib">
               <span class="icon iconfont">&#xe734;</span>
@@ -59,9 +73,39 @@
               </li>
           
             <li class="dib">
+              <span class="icon iconfont">&#xe718;</span>
+                <div class="name">删除</div>
+                <div class="code-name">&amp;#xe718;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon iconfont">&#xeabf;</span>
+                <div class="name">导出</div>
+                <div class="code-name">&amp;#xeabf;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon iconfont">&#xeac0;</span>
+                <div class="name">导入</div>
+                <div class="code-name">&amp;#xeac0;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon iconfont">&#xeb16;</span>
+                <div class="name">置顶</div>
+                <div class="code-name">&amp;#xeb16;</div>
+              </li>
+          
+            <li class="dib">
               <span class="icon iconfont">&#xe66b;</span>
                 <div class="name">重做</div>
                 <div class="code-name">&amp;#xe66b;</div>
+              </li>
+          
+            <li class="dib">
+              <span class="icon iconfont">&#xe68e;</span>
+                <div class="name">置底</div>
+                <div class="code-name">&amp;#xe68e;</div>
               </li>
           
           </ul>
@@ -82,7 +126,9 @@
 <pre><code class="language-css"
 >@font-face {
   font-family: 'iconfont';
-  src: url('iconfont.ttf?t=1692180537761') format('truetype');
+  src: url('iconfont.woff2?t=1692279915224') format('woff2'),
+       url('iconfont.woff?t=1692279915224') format('woff'),
+       url('iconfont.ttf?t=1692279915224') format('truetype');
 }
 </code></pre>
           <h3 id="-iconfont-">第二步：定义使用 iconfont 的样式</h3>
@@ -109,6 +155,24 @@
         <ul class="icon_lists dib-box">
           
           <li class="dib">
+            <span class="icon iconfont icon-bianji"></span>
+            <div class="name">
+              编辑
+            </div>
+            <div class="code-name">.icon-bianji
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon iconfont icon-zitiyulan"></span>
+            <div class="name">
+              字体预览
+            </div>
+            <div class="code-name">.icon-zitiyulan
+            </div>
+          </li>
+          
+          <li class="dib">
             <span class="icon iconfont icon-chexiao"></span>
             <div class="name">
               撤销
@@ -118,11 +182,56 @@
           </li>
           
           <li class="dib">
+            <span class="icon iconfont icon-shanchu"></span>
+            <div class="name">
+              删除
+            </div>
+            <div class="code-name">.icon-shanchu
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon iconfont icon-daochu"></span>
+            <div class="name">
+              导出
+            </div>
+            <div class="code-name">.icon-daochu
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon iconfont icon-daoru"></span>
+            <div class="name">
+              导入
+            </div>
+            <div class="code-name">.icon-daoru
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon iconfont icon-zhiding"></span>
+            <div class="name">
+              置顶
+            </div>
+            <div class="code-name">.icon-zhiding
+            </div>
+          </li>
+          
+          <li class="dib">
             <span class="icon iconfont icon-zhongzuo"></span>
             <div class="name">
               重做
             </div>
             <div class="code-name">.icon-zhongzuo
+            </div>
+          </li>
+          
+          <li class="dib">
+            <span class="icon iconfont icon-zhidi"></span>
+            <div class="name">
+              置底
+            </div>
+            <div class="code-name">.icon-zhidi
             </div>
           </li>
           
@@ -155,6 +264,22 @@
           
             <li class="dib">
                 <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-bianji"></use>
+                </svg>
+                <div class="name">编辑</div>
+                <div class="code-name">#icon-bianji</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-zitiyulan"></use>
+                </svg>
+                <div class="name">字体预览</div>
+                <div class="code-name">#icon-zitiyulan</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-chexiao"></use>
                 </svg>
                 <div class="name">撤销</div>
@@ -163,10 +288,50 @@
           
             <li class="dib">
                 <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-shanchu"></use>
+                </svg>
+                <div class="name">删除</div>
+                <div class="code-name">#icon-shanchu</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-daochu"></use>
+                </svg>
+                <div class="name">导出</div>
+                <div class="code-name">#icon-daochu</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-daoru"></use>
+                </svg>
+                <div class="name">导入</div>
+                <div class="code-name">#icon-daoru</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-zhiding"></use>
+                </svg>
+                <div class="name">置顶</div>
+                <div class="code-name">#icon-zhiding</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-zhongzuo"></use>
                 </svg>
                 <div class="name">重做</div>
                 <div class="code-name">#icon-zhongzuo</div>
+            </li>
+          
+            <li class="dib">
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-zhidi"></use>
+                </svg>
+                <div class="name">置底</div>
+                <div class="code-name">#icon-zhidi</div>
             </li>
           
           </ul>
