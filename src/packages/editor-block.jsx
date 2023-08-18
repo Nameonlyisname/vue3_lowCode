@@ -1,8 +1,9 @@
 import { computed, defineComponent, inject, onMounted, ref } from "vue";
 export default defineComponent({
-  name:"Editor-Block",
+  name: "Editor-Block",
   props: {
     block: { type: Object },
+    formData: Object,
   },
   setup: (props) => {
     const blockStyles = computed(() => ({
@@ -26,7 +27,17 @@ export default defineComponent({
     });
     return () => {
       const component = config.componentMap[props.block.key];
-      const RenderComponent = component.render();
+      const RenderComponent = component.render({
+        props: props.block.props,
+        model: Object.keys(component.model || {}).reduce((prev, modelName) => {
+          let propName = props.block.model[modelName];
+          prev[modelName] = {
+            modelValue: props.formData[propName],
+            "onUpdate:modelValue": (v) => (props.formData[propName] = v),
+          };
+          return prev;
+        }, {}),
+      });
       return (
         <div class="editor-block" style={blockStyles.value} ref={blockRef}>
           {RenderComponent}

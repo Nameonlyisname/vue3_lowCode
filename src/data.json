@@ -4,8 +4,35 @@
     "height": "550"
   },
   "blocks": [
-    { "top": "100", "left": "100", "zIndex": 1, "key": "text" },
-    { "top": "200", "left": "200", "zIndex": 1, "key": "button" },
-    { "top": "300", "left": "300", "zIndex": 1, "key": "input" }
+    {
+      "top": "100",
+      "left": "100",
+      "zIndex": 1,
+      "key": "text",
+      "props": {
+        "text": "比待遇越比心胸越窄",
+        "color": "red",
+        "size": "14px"
+      }
+    },
+    {
+      "top": "100",
+      "left": "300",
+      "zIndex": 1,
+      "key": "text",
+      "props": {
+        "text": "讲奉献越讲境界越高",
+        "color": "red",
+        "size": "14px"
+      }
+    },
+    {
+      "top": "50",
+      "left": "210",
+      "zIndex": 1,
+      "key": "button",
+      "props": { "text": "张楚岚附体", "type": "primary", "size": "mini" }
+    },
+    { "top": "300", "left": "300", "zIndex": 1, "key": "input", "props": {}, "model": {} }
   ]
 }

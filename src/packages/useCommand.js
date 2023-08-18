@@ -111,6 +111,31 @@ export function useCommand(data, focusData) {
       };
     },
   });
+  registry({
+    name: "updateBlock",
+    pushQueue: true,
+    execute(newBlock, oldBlock) {
+      let state = {
+        before: data.value.blocks,
+        after: (() => {
+          let blocks = [...data.value.blocks];
+          const index = data.value.blocks.indexOf(oldBlock);
+          if (index > -1) {
+            blocks.splice(index, 1, newBlock);
+          }
+          return blocks;
+        })(),
+      };
+      return {
+        redo: () => {
+          data.value = { ...data.value, blocks: state.after };
+        },
+        undo: () => {
+          data.value = { ...data.value, blocks: state.before };
+        },
+      };
+    },
+  });
 
   registry({
     name: "placeTop",

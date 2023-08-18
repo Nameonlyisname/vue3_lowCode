@@ -24,6 +24,8 @@ export function useMenuDragger(containerRef, data) {
           zIndex: 1,
           key: currentComponent.key,
           alignCenter: true, //第一次拖动生成后，组件中心在鼠标上
+          props: {},
+          model: {},
         },
       ],
     };
