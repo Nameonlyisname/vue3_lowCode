@@ -1,5 +1,4 @@
 import { computed, defineComponent, inject, ref } from "vue";
-import "./editor.scss";
 import EditorBlock from "./editor-block";
 import deepcopy from "deepcopy";
 import { useMenuDragger } from "./useMenuDragger"; // 左侧菜单内展示组件的拖拽功能
@@ -10,6 +9,8 @@ import { $dialog } from "../component/Dialog";
 import { ElButton } from "element-plus";
 import { $dropdown, DropdownItem } from "../component/Dropdown";
 import EditorOperator from "./editor-operator";
+
+import "./editor.scss"; //样式覆盖问题 扔最底下
 
 export default defineComponent({
   name: "Editor",
