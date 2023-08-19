@@ -9,4 +9,4 @@
 4.导入导出，修改层级（置顶，置底），删除，预览/编辑，展示  
 5.绑定某个值,修改元素大小，内容，位置等
 
-![界面图](./src//assets//view.jpg)
+![界面图](https://github.com/Nameonlyisname/vue3_lowCode/blob/master/src/assets/view.jpg)
